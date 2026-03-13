@@ -242,3 +242,157 @@ A: See "Automated Testing (Future)" section. Example:
       terraform-validate-against-pack.sh $test
     done
 ```
+
+---
+
+## Next Steps for Future Versions
+
+When you need to release **v1.1.0** or **v2.0.0**, follow this standardized git workflow:
+
+### 1. Make Your Changes
+```bash
+# Edit prompt_pack.yaml with new features/fixes
+nano prompt_pack.yaml
+```
+
+### 2. Update Version Number
+```bash
+# In prompt_pack.yaml, bump the version field
+version: "1.1.0"  # Follow semantic versioning (MAJOR.MINOR.PATCH)
+```
+
+### 3. Update CHANGELOG
+```bash
+# Add entry to top of CHANGELOG.md
+# Format: ## [X.Y.Z] - YYYY-MM-DD
+# Include: ### Added, ### Changed, ### Fixed, ### Deprecated, ### Security (if applicable)
+```
+
+### 4. Commit Changes
+```bash
+cd /home/rhel/Prompt
+
+# Stage all changes
+git add .
+
+# Commit with semantic message
+git commit -m "feat: [description of changes] (vX.Y.Z)
+
+- Feature/fix detail 1
+- Feature/fix detail 2
+- Feature/fix detail 3"
+
+# Examples:
+# - MINOR: "feat: add Helm provider guidance (v1.1.0)"
+# - PATCH: "fix: correct tfsec comment in security guardrails (v1.0.1)"
+# - MAJOR: "feat: support multi-cloud (Azure/GCP) (v2.0.0)"
+```
+
+### 5. Create Annotated Tag
+```bash
+# Create tag with release notes
+git tag -a vX.Y.Z -m "Release: Terraform Module Generation Prompt Pack vX.Y.Z
+
+Description of what this release includes/fixes.
+
+Key features/changes:
+- Major feature/change 1
+- Major feature/change 2
+- Major feature/change 3
+
+See CHANGELOG.md for details."
+
+# Example for v1.1.0:
+git tag -a v1.1.0 -m "Release: Terraform Module Generation Prompt Pack v1.1.0
+
+Added cross-module validation and cost comparison tools.
+
+Key features:
+- Cross-module validation (detect missing upstream outputs automatically)
+- Cost comparison tool (calculate savings: prod vs dev sizing)
+- Helm provider integration guide (for Weaviate, postgres-operator)
+- Tighter tfsec integration (validate tfsec rules programmatically)
+
+See CHANGELOG.md for complete details."
+```
+
+### 6. Push to Remote
+```bash
+# Push the commit to main branch
+git push origin main
+
+# Push the tag to remote
+git push origin vX.Y.Z
+
+# Or push all tags at once
+git push origin --tags
+```
+
+### 7. Verify Release
+```bash
+# Check that everything is in sync
+git status
+git log --oneline -3
+git tag -l
+git remote -v
+
+# Expected output:
+# - HEAD matches origin/main
+# - Latest commit shows your feature/fix
+# - New tag appears in git tag -l
+# - Remote URL is correct
+```
+
+### 8. Communicate to Team
+```bash
+# Create release notes on GitHub (optional but recommended)
+# Or send Slack message:
+
+"🎉 New Prompt Pack Release: v1.1.0
+
+What's new:
+- [Feature 1]
+- [Feature 2]
+- [Feature 3]
+
+Breaking changes: [None / list if MAJOR]
+
+Update instructions:
+git pull origin main && git checkout v1.1.0
+
+Questions? Check CHANGELOG.md or README.md"
+```
+
+---
+
+### Quick Reference Commands
+
+```bash
+# View current version
+grep "version:" prompt_pack.yaml
+
+# View all releases
+git tag -l
+git log --oneline --decorate
+
+# Checkout specific version
+git checkout v1.0.0
+
+# View release notes
+git show v1.0.0
+
+# Compare two versions
+git diff v1.0.0..v1.1.0
+
+# Create changelog from commits between versions
+git log v1.0.0..v1.1.0 --oneline
+```
+
+---
+
+### Version History Reference
+
+| Version | Date | Type | Key Changes |
+|---------|------|------|-------------|
+| 1.0.0 | 2026-03-13 | Initial | AWS Terraform, org patterns, 10 eval tests |
+| (next) | TBD | ? | Your next version here |
