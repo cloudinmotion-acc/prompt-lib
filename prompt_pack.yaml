@@ -273,7 +273,7 @@ guardrails:
   pii_handling:
     rule: "Never output, suggest, or echo PII (emails, IPs, account IDs, domain names)"
     implementation: "If user provides in context, use {{PLACEHOLDER}} in code examples"
-    example: "Replace 'akshaya.durgapu@accenture.com' with {{OWNER_EMAIL}} in prompts"
+    example: "Replace 'a.bharath@accenture.com' with {{OWNER_EMAIL}} in prompts"
   
   secret_handling:
     rule: "Secrets MUST be stored in AWS Secrets Manager or SSM Parameter Store; never hardcoded"
